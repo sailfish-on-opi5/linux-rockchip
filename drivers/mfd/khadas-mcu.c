@@ -84,10 +84,6 @@ static struct mfd_cell khadas_mcu_fan_cells[] = {
 	{ .name = "khadas-mcu-fan-ctrl", },
 };
 
-static struct mfd_cell khadas_mcu_cells[] = {
-	{ .name = "khadas-mcu-user-mem", },
-};
-
 static int khadas_mcu_probe(struct i2c_client *client,
 		       const struct i2c_device_id *id)
 {
@@ -109,13 +105,6 @@ static int khadas_mcu_probe(struct i2c_client *client,
 		dev_err(dev, "Failed to allocate register map: %d\n", ret);
 		return ret;
 	}
-
-	ret = devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE,
-				   khadas_mcu_cells,
-				   ARRAY_SIZE(khadas_mcu_cells),
-				   NULL, 0, NULL);
-	if (ret)
-		return ret;
 
 	if (of_find_property(dev->of_node, "#cooling-cells", NULL))
 		return devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE,
